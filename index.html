@@ -29,11 +29,117 @@ footer{padding:42px 6%;text-align:center;border-top:1px solid var(--line);font:1
 
 .reader-interaction{background:#f1e8dc;padding:70px 6%}.interaction-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}.interaction-card{background:#fffdf9;border:1px solid var(--line);border-radius:10px;padding:28px}.reaction-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.reaction{border:1px solid var(--line);background:#fff;padding:11px 15px;border-radius:999px;cursor:pointer;font:14px Arial,sans-serif}.reaction.active{border-color:var(--accent);box-shadow:0 0 0 2px #713d3720}.note-form{display:grid;gap:12px;margin-top:18px}.note-form input,.note-form textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;background:#fff;font:15px Georgia,serif}.note-form textarea{min-height:110px;resize:vertical}.note-form button{justify-self:start;border:0;background:var(--accent);color:#fff;padding:12px 20px;border-radius:5px;font:700 14px Arial,sans-serif;cursor:pointer}.reader-notes{margin-top:25px;display:grid;gap:10px}.reader-note{border-left:3px solid var(--accent);background:#faf5ee;padding:13px 15px}.reader-note strong{display:block;margin-bottom:4px}.small{font:12px Arial,sans-serif;color:var(--muted)}
 @media(max-width:760px){.interaction-grid{grid-template-columns:1fr}}
-</style>
+  </style>
 </head>
 <body>
+
 <nav>
   <div class="logo">
+    <img src="file_00000000911c82119995a5b7dc9c5ba4.png" alt="UPIRA 15 Logo">
+  </div>
+  <div class="links">
+    <a href="#book">Book</a>
+    <a href="#read">Read</a>
+    <a href="#community">Community</a>
+  </div>
+</nav>
+
+<header class="hero" id="book">
+  <div class="hero-inner">
+    <div class="cover-frame"><img src="upira-cover.png" alt="UPIRA book cover"></div>
+    <div>
+      <div class="kicker">An independent publication</div>
+      <h1>UPIRA</h1>
+      <h2>மௌனத்தில் மறைந்த காதல்</h2>
+      <p>உங்கள் UPIRA புத்தகத்தின் முழுமையான வாசிப்பு பதிப்பு. புத்தகத்தை இணையத்திலேயே படிக்கவும் அல்லது PDF-ஐ பதிவிறக்கம் செய்யவும்.</p>
+      <div class="buttons"><a class="btn primary" href="#read">Read the Book</a><a class="btn secondary" href="UPIRA_BOOK.pdf" download>Download PDF</a></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>About the Book</h2>
+    <p class="intro">“உன் வேண்டுதல்களில் நான் இருந்தால், இனி நான் இந்த உலகில் வேண்டாம் என்று வேண்டிக்கொள்” — UPIRA-வின் மைய உணர்வை பிரதிபலிக்கும் காதல், நினைவு மற்றும் பிரிவின் எழுத்துப் பயணம்.</p>
+    <div class="cards">
+      <div class="card"><h3>📖 Read Online</h3><p>முழு புத்தகத்தையும் இந்த இணையதளத்திலேயே படிக்கலாம்.</p></div>
+      <div class="card"><h3>📥 Download</h3><p>இறுதி PDF பதிப்பை பதிவிறக்கம் செய்து offline-ல் படிக்கலாம்.</p></div>
+      <div class="card"><h3>✍️ Author</h3><p>ஆசிரியர் பற்றிய தகவல்களை பின்னர் இந்தப் பகுதியில் சேர்க்கலாம்.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reader" id="read">
+  <div class="wrap">
+    <h2>Read UPIRA</h2>
+    <p class="intro">கீழே உள்ள reader-ல் முழு புத்தகத்தையும் உலாவலாம்.</p>
+    <div class="readerbox">
+      <iframe src="UPIRA_BOOK.pdf" title="UPIRA book reader"></iframe>
+      <div class="reader-actions"><div class="buttons"><a class="btn primary" href="UPIRA_BOOK.pdf" target="_blank" rel="noopener">Open Full PDF</a><a class="btn secondary" href="UPIRA_BOOK.pdf" download>Download PDF</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="reader-interaction" id="community">
+  <div class="wrap">
+    <h2>Reader Interaction</h2>
+    <p class="intro">UPIRA is not only a book — it is a feeling shared between the writer and the reader. Leave a small reaction or a note about what stayed with you.</p>
+    <div class="interaction-grid">
+      <div class="interaction-card">
+        <h3>What did UPIRA make you feel?</h3>
+        <p class="small">Your reaction is saved on this device.</p>
+        <div class="reaction-row">
+          <button class="reaction" data-reaction="❤️ Loved it">❤️ Loved it <span>0</span></button>
+          <button class="reaction" data-reaction="🥺 Emotional">🥺 Emotional <span>0</span></button>
+          <button class="reaction" data-reaction="💭 Made me think">💭 Made me think <span>0</span></button>
+          <button class="reaction" data-reaction="🌹 Beautiful">🌹 Beautiful <span>0</span></button>
+        </div>
+      </div>
+      <div class="interaction-card">
+        <h3>Leave a Reader Note</h3>
+        <p class="small">Notes are stored locally in this free version. They are not publicly shared yet.</p>
+        <form class="note-form" id="noteForm">
+          <input id="readerName" maxlength="40" placeholder="Your name" required>
+          <textarea id="readerMessage" maxlength="300" placeholder="What stayed with you from UPIRA?" required></textarea>
+          <button type="submit">Post My Note</button>
+        </form>
+        <div class="reader-notes" id="readerNotes"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="author">
+  <div class="wrap author">
+    <div class="authorphoto">AUTHOR PHOTO<br>CAN BE ADDED</div>
+    <div><h2>About the Author</h2><p class="intro">ஆசிரியரின் அறிமுகம், புகைப்படம் மற்றும் தொடர்பு விவரங்களை இங்கே சேர்க்கலாம்.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="intro">வாசகர்களுக்கான தொடர்பு மின்னஞ்சல் அல்லது சமூக வலைதள இணைப்புகளை இங்கே சேர்க்கலாம்.</p>
+  </div>
+</section>
+
+<footer>© 2026 UPIRA. All rights reserved.</footer>
+
+<script>
+(function(){
+const rk='upiraReactions', nk='upiraReaderNotes';
+const reactions=JSON.parse(localStorage.getItem(rk)||'{}');
+document.querySelectorAll('.reaction').forEach(b=>{
+ const t=b.dataset.reaction;b.querySelector('span').textContent=reactions[t]||0;
+ b.onclick=()=>{reactions[t]=(reactions[t]||0)+1;localStorage.setItem(rk,JSON.stringify(reactions));b.querySelector('span').textContent=reactions[t];b.classList.add('active')};
+});
+const form=document.getElementById('noteForm'), box=document.getElementById('readerNotes');
+function render(){box.innerHTML='';JSON.parse(localStorage.getItem(nk)||'[]').slice(-20).reverse().forEach(n=>{const d=document.createElement('div');d.className='reader-note';d.innerHTML='<strong></strong><div></div><small></small>';d.children[0].textContent=n.name;d.children[1].textContent=n.message;d.children[2].textContent=n.date;box.appendChild(d)})}
+form.onsubmit=e=>{e.preventDefault();let a=JSON.parse(localStorage.getItem(nk)||'[]');a.push({name:readerName.value.trim(),message:readerMessage.value.trim(),date:new Date().toLocaleDateString()});localStorage.setItem(nk,JSON.stringify(a.slice(-20)));form.reset();render()};render();
+})();
+</script>
+</body>
+</html>
     <img src="file_00000000911c82119995a5b7dc9c5ba4.png" alt="UPIRA 15 Logo">
   </div>
   <div class="links">
