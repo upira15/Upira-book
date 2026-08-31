@@ -131,7 +131,6 @@
 </section>
 
 <footer>© 2026 UPIRA. All rights reserved.</footer>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -143,95 +142,76 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_KEY
 );
 
-const bookId = 1;
-
-/* -------------------------
-   READER NOTES
-------------------------- */
-
 const form = document.getElementById('noteForm');
 const box = document.getElementById('readerNotes');
 
 async function loadNotes() {
-  const { data, error } = await supabaseClient
+  const result = await supabaseClient
     .from('reader_notes')
     .select('name, message, created_at')
     .order('created_at', { ascending: false })
     .limit(20);
 
-  if (error) {
-    console.error(error);
+  if (result.error) {
+    console.error('Load notes error:', result.error);
     return;
   }
 
   box.innerHTML = '';
 
-  data.forEach(note => {
-    const d = document.createElement('div');
-    d.className = 'reader-note';
+  result.data.forEach(function(note) {
+    const item = document.createElement('div');
+    item.className = 'reader-note';
 
-    const name = document.createElement('strong');
-    name.textContent = note.name;
+    item.innerHTML =
+      '<strong>' + escapeHTML(note.name) + '</strong>' +
+      '<p>' + escapeHTML(note.message) + '</p>' +
+      '<small>' + new Date(note.created_at).toLocaleDateString() + '</small>';
 
-    const message = document.createElement('div');
-    message.textContent = note.message;
-
-    const date = document.createElement('small');
-    date.textContent = new Date(note.created_at).toLocaleDateString();
-
-    d.appendChild(name);
-    d.appendChild(message);
-    d.appendChild(date);
-
-    box.appendChild(d);
+    box.appendChild(item);
   });
 }
 
-form.onsubmit = async (e) => {
-  e.preventDefault();
+function escapeHTML(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
 
-  const name = document.getElementById('readerName').value.trim();
-  const message = document.getElementById('readerMessage').value.trim();
+if (form) {
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-  if (!name || !message) return;
+    const name = document.getElementById('readerName').value.trim();
+    const message = document.getElementById('readerMessage').value.trim();
 
-  const { error } = await supabaseClient
-    .from('reader_notes')
-    .insert({
-      name: name,
-      message: message
-    });
+    if (!name || !message) {
+      alert('Please enter your name and message.');
+      return;
+    }
 
-  if (error) {
-    alert('Unable to post note. Please try again.');
-    console.error(error);
-    return;
-  }
+    const result = await supabaseClient
+      .from('reader_notes')
+      .insert({
+        name: name,
+        message: message
+      });
 
-  form.reset();
-  await loadNotes();
-};
+    if (result.error) {
+      console.error('Insert error:', result.error);
+      alert('Unable to post note. Please try again.');
+      return;
+    }
+
+    form.reset();
+
+    alert('Your note has been posted! ❤️');
+
+    loadNotes();
+  });
+}
 
 loadNotes();
-
-
-/* -------------------------
-   REACTIONS
-------------------------- */
-
-document.querySelectorAll('.reaction').forEach(button => {
-
-  button.addEventListener('click', async () => {
-
-    const reaction = button.dataset.reaction;
-
-    button.classList.add('active');
-
-    console.log('Reaction:', reaction);
-
-  });
-
-});
 </script>
 </body>
 </html>
