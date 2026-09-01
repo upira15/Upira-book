@@ -15,7 +15,7 @@
     .links{display:flex;gap:20px}.links a{font:14px Arial,sans-serif;color:var(--ink);text-decoration:none}
     .hero{padding:65px 6%;min-height:88vh;display:grid;place-items:center;background:radial-gradient(circle at 85% 18%,#eadbd0,transparent 36%)}
     .hero-inner{max-width:1080px;width:100%;display:grid;grid-template-columns:420px 1fr;gap:75px;align-items:center}
-    .cover-frame{width:min(100%,390px);margin:auto;padding:9px;background:#eee4d7;box-shadow:0 28px 60px #2b211c38}.cover-frame img{width:100%;display:block}
+    .cover-frame{width:min(100%,390px);margin:auto;padding:99px;background:#eee4d7;box-shadow:0 28px 60px #2b211c38}.cover-frame img{width:100%;display:block}
     .kicker{text-transform:uppercase;letter-spacing:.24em;color:var(--accent);font:700 12px Arial,sans-serif}.hero h1{font-size:clamp(55px,9vw,100px);line-height:.9;margin:15px 0 25px;letter-spacing:.05em}.hero h2{font-size:clamp(22px,4vw,38px);margin:0 0 20px}.hero p{max-width:590px;font-size:20px;color:var(--muted)}
     .buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.btn{display:inline-block;padding:13px 22px;border-radius:4px;text-decoration:none;font:700 14px Arial,sans-serif;border:1px solid var(--accent)}.primary{background:var(--accent);color:#fff}.secondary{color:var(--accent);background:transparent}
     section{padding:85px 6%}.wrap{max-width:1050px;margin:auto}h2{font-size:42px;line-height:1.1;margin:0 0 18px}.intro{max-width:760px;color:var(--muted);font-size:19px}
@@ -101,7 +101,7 @@
       </div>
       <div class="interaction-card">
         <h3>Leave a Reader Note</h3>
-        <p class="small">Notes are stored locally in this free version. They are not publicly shared yet.</p>
+        <p class="small">Notes are shared with all readers in real time.</p>
         <form class="note-form" id="noteForm">
           <input id="readerName" maxlength="40" placeholder="Your name" required>
           <textarea id="readerMessage" maxlength="300" placeholder="What stayed with you from UPIRA?" required></textarea>
@@ -131,35 +131,40 @@
 </section>
 
 <footer>© 2026 UPIRA. All rights reserved.</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
+// IMPORTANT: Replace SUPABASE_KEY with your valid Anon key from Supabase Dashboard -> Project Settings -> API
 const SUPABASE_URL = 'https://jnktgzjrcyxbdgpdegde.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_V3ms7HM9FgRVMSU5z1ef6g_yy-8zTaE';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impua3RnempyY3l4YmRncGRlZGdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxNzMxMDEsImV4cCI6MjEwMzc0OTEwMX0.lPoHt620MOPEiXV8VXmNYb-hpv69xw4gxi40oiyCN4o';
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+// Fixed Supabase Initialization
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const form = document.getElementById('noteForm');
 const box = document.getElementById('readerNotes');
 
+function escapeHTML(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}
+
 async function loadNotes() {
-  const result = await supabaseClient
+  const { data, error } = await supabaseClient
     .from('reader_notes')
     .select('name, message, created_at')
     .order('created_at', { ascending: false })
     .limit(20);
 
-  if (result.error) {
-    console.error('Load notes error:', result.error);
+  if (error) {
+    console.error('Load notes error:', error);
     return;
   }
 
   box.innerHTML = '';
 
-  result.data.forEach(function(note) {
+  data.forEach(function(note) {
     const item = document.createElement('div');
     item.className = 'reader-note';
 
@@ -170,12 +175,6 @@ async function loadNotes() {
 
     box.appendChild(item);
   });
-}
-
-function escapeHTML(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }
 
 if (form) {
@@ -190,23 +189,18 @@ if (form) {
       return;
     }
 
-    const result = await supabaseClient
+    const { error } = await supabaseClient
       .from('reader_notes')
-      .insert({
-        name: name,
-        message: message
-      });
+      .insert([{ name: name, message: message }]);
 
-    if (result.error) {
-      console.error('Insert error:', result.error);
-      alert('Unable to post note. Please try again.');
+    if (error) {
+      console.error('Insert error:', error);
+      alert('Unable to post note. Please verify Supabase connection and RLS settings.');
       return;
     }
 
     form.reset();
-
     alert('Your note has been posted! ❤️');
-
     loadNotes();
   });
 }
