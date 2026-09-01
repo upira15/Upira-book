@@ -133,42 +133,89 @@
 <footer>© 2026 UPIRA. All rights reserved.</footer>
 
 <script>
-(function(){
-  const rk='upiraReactions', nk='upiraReaderNotes';
-  const reactions=JSON.parse(localStorage.getItem(rk)||'{}');
-  document.querySelectorAll('.reaction').forEach(b=>{
-    const t=b.dataset.reaction;
-    b.querySelector('span').textContent=reactions[t]||0;
-    b.onclick=()=>{
-      reactions[t]=(reactions[t]||0)+1;
-      localStorage.setItem(rk,JSON.stringify(reactions));
-      b.querySelector('span').textContent=reactions[t];
-      b.classList.add('active');
-    };
-  });
-  const form=document.getElementById('noteForm'), box=document.getElementById('readerNotes');
-  function render(){
-    box.innerHTML='';
-    JSON.parse(localStorage.getItem(nk)||'[]').slice(-20).reverse().forEach(n=>{
-      const d=document.createElement('div');
-      d.className='reader-note';
-      d.innerHTML='<strong></strong><div></div><small></small>';
-      d.children[0].textContent=n.name;
-      d.children[1].textContent=n.message;
-      d.children[2].textContent=n.date;
-      box.appendChild(d);
-    });
-  }
-  form.onsubmit=e=>{
-    e.preventDefault();
-    let a=JSON.parse(localStorage.getItem(nk)||'[]');
-    a.push({name:document.getElementById('readerName').value.trim(),message:document.getElementById('readerMessage').value.trim(),date:new Date().toLocaleDateString()});
-    localStorage.setItem(nk,JSON.stringify(a.slice(-20)));
-    form.reset();
-    render();
-  };
-  render();
-})();
+  (function() {
+    const noteForm = document.getElementById('noteForm');
+    const box = document.getElementById('readerNotes');
+    const SHEETDB_URL = 'https://sheetdb.io/api/v1/efgwsllrvbqjr';
+
+    function escapeHTML(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    // Load existing notes from local storage for display
+    function loadNotes() {
+      if (!box) return;
+      box.innerHTML = '';
+      const notes = JSON.parse(localStorage.getItem('upira_notes') || '[]');
+      notes.forEach(note => {
+        const item = document.createElement('div');
+        item.className = 'reader-note';
+        item.innerHTML = '<strong>' + escapeHTML(note.name) + '</strong>' +
+                         '<p>' + escapeHTML(note.message) + '</p>' +
+                         '<small>' + note.date + '</small>';
+        box.appendChild(item);
+      });
+    }
+
+    if (noteForm) {
+      noteForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('noteName').value.trim();
+        const messageInput = document.getElementById('noteMessage').value.trim();
+        if (!nameInput || !messageInput) return;
+
+        const submitBtn = noteForm.querySelector('button');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        const currentDate = new Date().toLocaleDateString();
+
+        // 1. Send data to Google Sheets via SheetDB
+        fetch(SHEETDB_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            data: [
+              {
+                name: nameInput,
+                message: messageInput,
+                date: currentDate
+              }
+            ]
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          // 2. Save locally so reader sees their note immediately
+          const newNote = { name: nameInput, message: messageInput, date: currentDate };
+          const notes = JSON.parse(localStorage.getItem('upira_notes') || '[]');
+          notes.unshift(newNote);
+          localStorage.setItem('upira_notes', JSON.stringify(notes));
+
+          // Clean up form & reload list
+          noteForm.reset();
+          loadNotes();
+          alert('Thank you! Your note has been submitted.');
+        })
+        .catch(error => {
+          console.error('Error submitting note:', error);
+          alert('Failed to send note. Please try again.');
+        })
+        .finally(() => {
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        });
+      });
+    }
+
+    loadNotes();
+  })();
 </script>
 </body>
 </html>
