@@ -5,12 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UPIRA - Official Book Site</title>
   <style>
+    :root {
+      --bg: #121212;
+      --card-bg: #1e1e1e;
+      --accent: #4a2810;
+      --text: #e0e0e0;
+      --subtext: #a0a0a0;
+      --border: #333;
+    }
     body {
       font-family: system-ui, -apple-system, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+    nav a {
+      color: var(--subtext);
+      text-decoration: none;
+      margin-left: 15px;
     }
     .wrap {
       max-width: 800px;
@@ -19,19 +45,33 @@
     }
     section {
       margin-bottom: 40px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
     }
     h2 {
-      border-bottom: 2px solid #eee;
+      border-bottom: 1px solid var(--border);
       padding-bottom: 10px;
+      margin-top: 0;
+      color: #fff;
     }
     .intro {
-      color: #666;
+      color: var(--subtext);
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #eee;
-      margin-top: 40px;
+    .reaction-btns {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+    .reaction-btn {
+      background: #2a2a2a;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
     }
     .note-form {
       display: flex;
@@ -41,14 +81,16 @@
     }
     .note-form input, .note-form textarea {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
+      padding: 12px;
+      background: #2a2a2a;
+      border: 1px solid var(--border);
+      color: #fff;
       border-radius: 6px;
       box-sizing: border-box;
     }
     .note-form button {
       padding: 12px;
-      background-color: #4a2810;
+      background-color: var(--accent);
       color: white;
       border: none;
       border-radius: 6px;
@@ -56,26 +98,52 @@
       font-weight: bold;
     }
     .reader-note {
-      background: white;
+      background: #252525;
       padding: 15px;
       border-radius: 6px;
       margin-bottom: 10px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
     }
     .reader-note small {
-      color: #888;
+      color: var(--subtext);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--card-bg);
+      color: var(--subtext);
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
+  <header>
+    <div class="logo">UPIRA</div>
+    <nav>
+      <a href="#book">Book</a>
+      <a href="#reader-interaction">Community</a>
+    </nav>
+  </header>
+
   <div class="wrap">
+    <section id="book">
+      <h2>Book Overview</h2>
+      <p class="intro">உபிரா - அதிகாரப்பூர்வ புத்தக தளம்.</p>
+    </section>
+
     <section id="reader-interaction">
       <h2>What did UPIRA make you feel?</h2>
       <p class="intro">Your reaction is saved on this device.</p>
       
+      <div class="reaction-btns">
+        <button class="reaction-btn" onclick="addReaction('loved')">❤️ Loved it <span id="lovedCount">0</span></button>
+        <button class="reaction-btn" onclick="addReaction('emotional')">🥺 Emotional <span id="emotionalCount">0</span></button>
+      </div>
+
       <h3>Leave a Reader Note</h3>
-      <p class="intro">Notes are shared in real time.</p>
+      <p class="intro">Notes are saved directly to this page.</p>
       
       <form id="noteForm" class="note-form">
         <input type="text" id="noteName" placeholder="Your Name" required>
@@ -117,6 +185,19 @@
       });
     }
 
+    function loadReactions() {
+      const reactions = JSON.parse(localStorage.getItem('upira_reactions') || '{"loved":0,"emotional":0}');
+      document.getElementById('lovedCount').textContent = reactions.loved || 0;
+      document.getElementById('emotionalCount').textContent = reactions.emotional || 0;
+    }
+
+    function addReaction(type) {
+      const reactions = JSON.parse(localStorage.getItem('upira_reactions') || '{"loved":0,"emotional":0}');
+      reactions[type] = (reactions[type] || 0) + 1;
+      localStorage.setItem('upira_reactions', JSON.stringify(reactions));
+      loadReactions();
+    }
+
     if (form) {
       form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -140,6 +221,7 @@
     }
 
     loadNotes();
+    loadReactions();
   </script>
 </body>
 </html>
