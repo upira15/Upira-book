@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://upira15.github.io/Upira-book/sitemap.xml
