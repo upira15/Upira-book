@@ -1,910 +1,864 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-<title>UPIRA – A Tamil Love Story</title>
-<meta name="description" content="UPIRA – A Tamil romantic story shared between a writer and the reader. Read the complete book online.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://upira15.github.io/Upira-book/">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
-  --bg:#f8f3ee;
-  --text:#2d2521;
-  --muted:#76685f;
-  --accent:#713d37;
-  --card:#fffdf9;
-  --line:#dfd3c8;
-}
+  <title>UPIRA – A Tamil Love Story</title>
 
-*{box-sizing:border-box}
+  <meta name="description"
+        content="UPIRA – A Tamil romantic story about love, memories and emotions. Read the complete book online.">
 
-html{scroll-behavior:smooth}
+  <meta name="keywords"
+        content="UPIRA, Tamil novel, Tamil love story, Tamil book, romantic novel">
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Georgia,serif;
-  line-height:1.7;
-}
+  <meta name="author"
+        content="UPIRA">
 
-nav{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:#fffdf9ee;
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-  padding:14px 6%;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-}
+  <link rel="canonical"
+        href="https://upira15.github.io/Upira-book/">
 
-nav a{
-  color:var(--accent);
-  text-decoration:none;
-  font:bold 14px Arial,sans-serif;
-}
+  <style>
 
-section{padding:85px 6%}
+    * {
+      box-sizing: border-box;
+    }
 
-.wrap{
-  max-width:1050px;
-  margin:auto;
-}
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #faf7f2;
+      color: #2b2220;
+      line-height: 1.6;
+    }
 
-.hero{
-  min-height:90vh;
-  display:grid;
-  place-items:center;
-  text-align:center;
-  padding:70px 6%;
-}
+    header {
+      text-align: center;
+      padding: 35px 20px 25px;
+      background: #fff;
+    }
 
-.hero img{
-  width:min(100%,430px);
-  max-height:600px;
-  object-fit:cover;
-  border-radius:10px;
-  box-shadow:0 20px 50px #0003;
-}
+    header img {
+      max-width: 220px;
+      width: 80%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
 
-.hero h1{
-  font-size:clamp(55px,9vw,100px);
-  line-height:.9;
-  margin:25px 0;
-  letter-spacing:.05em;
-}
+    h1 {
+      margin: 20px 0 5px;
+      font-size: 34px;
+    }
 
-.hero h2{
-  font-size:clamp(22px,4vw,38px);
-  margin:0 0 20px;
-}
+    .subtitle {
+      color: #777;
+      font-size: 16px;
+    }
 
-.hero p{
-  max-width:590px;
-  margin:auto;
-  font-size:20px;
-  color:var(--muted);
-}
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
 
-.buttons{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:12px;
-  margin-top:28px;
-}
+    .card {
+      background: #fff;
+      margin: 25px 0;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
 
-.btn{
-  display:inline-block;
-  padding:13px 22px;
-  border-radius:4px;
-  text-decoration:none;
-  font:700 14px Arial,sans-serif;
-  border:1px solid var(--accent);
-}
+    .card h2 {
+      margin-top: 0;
+      color: #8b2f3c;
+    }
 
-.primary{
-  background:var(--accent);
-  color:#fff;
-}
+    .book-reader {
+      width: 100%;
+      height: 700px;
+      border: none;
+      border-radius: 12px;
+      background: #eee;
+    }
 
-.secondary{
-  color:var(--accent);
-  background:transparent;
-}
+    .reaction-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
 
-h2{
-  font-size:42px;
-  line-height:1.1;
-  margin:0 0 18px;
-}
+    .reaction {
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 30px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.2s;
+    }
 
-.intro{
-  max-width:760px;
-  color:var(--muted);
-  font-size:19px;
-}
+    .reaction:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
 
-.reader{
-  background:#211c19;
-  color:#f8f0e7;
-}
+    .reaction.active {
+      background: #f8e1e5;
+      border-color: #c76b7a;
+    }
 
-.reader .intro{
-  color:#d4c8bd;
-}
+    .reaction:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
 
-.readerbox{
-  margin-top:30px;
-  background:#fffaf2;
-  border-radius:8px;
-  overflow:hidden;
-  box-shadow:0 15px 35px #0003;
-}
+    .reaction span {
+      font-weight: bold;
+      margin-left: 4px;
+    }
 
-.readerbox iframe{
-  display:block;
-  width:100%;
-  height:780px;
-  border:0;
-}
+    .small {
+      color: #777;
+      font-size: 14px;
+      margin-top: 10px;
+    }
 
-.reader-actions{
-  padding:18px 22px;
-  background:#f1e8dc;
-}
+    form {
+      margin-top: 20px;
+    }
 
-.reader-interaction{
-  background:#f1e8dc;
-  padding:70px 6%;
-}
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+    }
 
-.interaction-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:22px;
-  margin-top:30px;
-}
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
 
-.interaction-card{
-  background:#fffdf9;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:28px;
-}
+    .submit-btn {
+      border: none;
+      background: #8b2f3c;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 15px;
+    }
 
-.interaction-card h3{
-  margin-top:0;
-}
+    .submit-btn:hover {
+      background: #702431;
+    }
 
-.small{
-  color:var(--muted);
-  font:14px Arial,sans-serif;
-}
+    .note {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
 
-.reaction-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:18px;
-}
+    .note:last-child {
+      border-bottom: none;
+    }
 
-.reaction{
-  border:1px solid var(--line);
-  background:#fff;
-  padding:11px 15px;
-  border-radius:999px;
-  cursor:pointer;
-  font:14px Arial,sans-serif;
-}
+    .note-name {
+      font-weight: bold;
+      color: #8b2f3c;
+    }
 
-.reaction.active{
-  border-color:var(--accent);
-  box-shadow:0 0 0 2px #713d3720;
-}
+    .note-date {
+      color: #999;
+      font-size: 12px;
+    }
 
-.reaction:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #777;
+      font-size: 14px;
+    }
 
-.note-form{
-  display:grid;
-  gap:12px;
-  margin-top:18px;
-}
+    @media (max-width: 600px) {
 
-.note-form input,
-.note-form textarea{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  background:#fff;
-  font:15px Georgia,serif;
-}
+      h1 {
+        font-size: 28px;
+      }
 
-.note-form textarea{
-  min-height:110px;
-  resize:vertical;
-}
+      .container {
+        padding: 12px;
+      }
 
-.note-form button{
-  justify-self:start;
-  border:0;
-  background:var(--accent);
-  color:#fff;
-  padding:12px 18px;
-  border-radius:5px;
-  cursor:pointer;
-  font-weight:bold;
-}
+      .card {
+        padding: 18px;
+      }
 
-.note-form button:disabled{
-  opacity:.6;
-}
+      .book-reader {
+        height: 550px;
+      }
 
-.reader-notes{
-  margin-top:20px;
-  display:grid;
-  gap:12px;
-}
+      .reaction {
+        font-size: 14px;
+        padding: 9px 12px;
+      }
 
-.reader-note{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:7px;
-  padding:14px;
-}
+    }
 
-.reader-note strong{
-  display:block;
-  margin-bottom:5px;
-}
-
-.reader-note small{
-  display:block;
-  color:var(--muted);
-  margin-top:8px;
-  font:12px Arial,sans-serif;
-}
-
-.author{
-  display:grid;
-  grid-template-columns:230px 1fr;
-  gap:50px;
-  align-items:center;
-}
-
-.authorphoto{
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  background:#e4d7cb;
-  display:grid;
-  place-items:center;
-  text-align:center;
-  font:12px Arial,sans-serif;
-  color:#76685f;
-}
-
-footer{
-  padding:42px 6%;
-  text-align:center;
-  border-top:1px solid var(--line);
-  font:13px Arial,sans-serif;
-  color:var(--muted);
-}
-
-@media(max-width:700px){
-  section{padding:60px 5%}
-
-  .hero{
-    min-height:auto;
-    padding-top:50px;
-  }
-
-  .hero h1{
-    font-size:64px;
-  }
-
-  .readerbox iframe{
-    height:600px;
-  }
-
-  .interaction-grid{
-    grid-template-columns:1fr;
-  }
-
-  .author{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .authorphoto{
-    margin:auto;
-  }
-}
-</style>
+  </style>
 </head>
 
 <body>
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#read">Read</a>
-  <a href="#community">Reader Interaction</a>
-  <a href="#author">Author</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<section class="hero" id="home">
-  <div class="wrap">
+  <header>
 
     <img src="upira-cover.png"
-         alt="UPIRA Tamil book cover"
-         loading="eager">
+         alt="UPIRA Tamil Book Cover">
 
     <h1>UPIRA</h1>
 
-    <h2>ஒரு காதல்... ஒரு வாழ்க்கை...</h2>
-
-    <p>
-      சில காதல்கள் முடிவதில்லை.
-      அவை நினைவுகளாக வாழ்ந்து கொண்டே இருக்கும்.
-    </p>
-
-    <div class="buttons">
-      <a class="btn primary" href="#read">Read UPIRA</a>
-      <a class="btn secondary" href="#community">Reader Interaction</a>
+    <div class="subtitle">
+      A Tamil Love Story
     </div>
 
-  </div>
-</section>
+  </header>
 
-<section id="about">
-  <div class="wrap">
 
-    <h2>About UPIRA</h2>
+  <main class="container">
 
-    <p class="intro">
-      UPIRA என்பது காதல், நினைவுகள் மற்றும் மனித உணர்வுகளை
-      மையமாகக் கொண்ட ஒரு தமிழ் படைப்பு.
-    </p>
 
-    <p>
-      இந்த புத்தகம் எழுத்தாளரின் உணர்வுகளையும்,
-      வாசகரின் நினைவுகளையும் இணைக்கும் ஒரு சிறிய உலகம்.
-    </p>
+    <!-- BOOK -->
 
-  </div>
-</section>
+    <section class="card">
 
-<section class="reader" id="read">
+      <h2>📖 Read UPIRA</h2>
 
-  <div class="wrap">
-
-    <h2>Read UPIRA</h2>
-
-    <p class="intro">
-      கீழே உள்ள reader-ல் முழு புத்தகத்தையும் உலாவலாம்.
-    </p>
-
-    <div class="readerbox">
-
-      <iframe
-        src="UPIRA_BOOK.pdf"
-        title="UPIRA book reader">
-      </iframe>
-
-      <div class="reader-actions">
-
-        <div class="buttons">
-
-          <a class="btn primary"
-             href="UPIRA_BOOK.pdf"
-             target="_blank"
-             rel="noopener">
-             Open Full PDF
-          </a>
-
-          <a class="btn secondary"
-             href="UPIRA_BOOK.pdf"
-             download>
-             Download PDF
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="reader-interaction" id="community">
-
-  <div class="wrap">
-
-    <h2>Reader Interaction</h2>
-
-    <p class="intro">
-      UPIRA is not only a book — it is a feeling shared between
-      the writer and the reader. Leave a small reaction or a note
-      about what stayed with you.
-    </p>
-
-    <div class="interaction-grid">
-
-      <div class="interaction-card">
-
-        <h3>What did UPIRA make you feel?</h3>
-
-        <p class="small">
-          Your reaction is shared publicly.
-          The totals are visible to everyone.
-        </p>
-
-        <div class="reaction-row">
-
-          <button class="reaction"
-                  data-reaction="❤️ Loved it">
-            ❤️ Loved it <span>0</span>
-          </button>
-
-          <button class="reaction"
-                  data-reaction="🥺 Emotional">
-            🥺 Emotional <span>0</span>
-          </button>
-
-          <button class="reaction"
-                  data-reaction="💭 Made me think">
-            💭 Made me think <span>0</span>
-          </button>
-
-          <button class="reaction"
-                  data-reaction="🌹 Beautiful">
-            🌹 Beautiful <span>0</span>
-          </button>
-
-        </div>
-
-      </div>
-
-      <div class="interaction-card">
-
-        <h3>Leave a Reader Note</h3>
-
-        <p class="small">
-          Notes are stored online and can be seen by other readers.
-        </p>
-
-        <form class="note-form" id="noteForm">
-
-          <input
-            id="readerName"
-            maxlength="40"
-            placeholder="Your name"
-            required>
-
-          <textarea
-            id="readerMessage"
-            maxlength="300"
-            placeholder="What stayed with you from UPIRA?"
-            required></textarea>
-
-          <button type="submit">
-            Post My Note
-          </button>
-
-        </form>
-
-        <div
-          class="reader-notes"
-          id="readerNotes">
-        </div>
-
-      </div>
-
-    </div>
-
-    <div
-      id="reactionStatus"
-      class="small"
-      style="margin-top:20px;">
-    </div>
-
-  </div>
-
-</section>
-
-<section id="author">
-
-  <div class="wrap author">
-
-    <div class="authorphoto">
-      AUTHOR PHOTO<br>
-      CAN BE ADDED
-    </div>
-
-    <div>
-
-      <h2>About the Author</h2>
-
-      <p class="intro">
-        ஆசிரியரின் அறிமுகம், புகைப்படம் மற்றும் தொடர்பு
-        விவரங்களை இங்கே சேர்க்கலாம்.
+      <p>
+        Read the complete book online.
       </p>
 
-    </div>
+      <iframe
+        class="book-reader"
+        src="UPIRA_BOOK.pdf"
+        title="UPIRA Book">
+      </iframe>
 
-  </div>
+    </section>
 
-</section>
 
-<section id="contact">
+    <!-- READER INTERACTION -->
 
-  <div class="wrap">
+    <section class="card">
 
-    <h2>Contact</h2>
+      <h2>❤️ Reader Interaction</h2>
 
-    <p class="intro">
-      வாசகர்களுக்கான தொடர்பு மின்னஞ்சல் அல்லது சமூக வலைதள
-      இணைப்புகளை இங்கே சேர்க்கலாம்.
-    </p>
+      <p>
+        What did you feel after reading UPIRA?
+      </p>
 
-  </div>
 
-</section>
+      <!-- IMPORTANT STATUS AREA -->
 
-<footer>
-  © 2026 UPIRA. All rights reserved.
-</footer>
+      <div id="reactionStatus"
+           class="small">
+        Connecting reader reactions...
+      </div>
 
 
-<!-- SUPABASE -->
+      <!-- REACTION BUTTONS -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <div class="reaction-row">
 
-<script>
+        <button
+          type="button"
+          class="reaction"
+          data-reaction="❤️ Loved it">
 
-(function(){
+          ❤️ Loved it
+          <span>0</span>
 
-  /* CORRECT SUPABASE PROJECT URL */
-  const SUPABASE_URL =
-    'https://jnktgzjrcyxbdgpdedge.supabase.co';
+        </button>
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    'sb_publishable_V3ms7HM9FgRVMSU5z1efg_yy-8zTaE';
 
-  const status =
-    document.getElementById('reactionStatus');
+        <button
+          type="button"
+          class="reaction"
+          data-reaction="🥺 Emotional">
 
-  const buttons =
-    document.querySelectorAll('.reaction');
+          🥺 Emotional
+          <span>0</span>
 
-  const notesBox =
-    document.getElementById('readerNotes');
+        </button>
 
-  const form =
-    document.getElementById('noteForm');
 
+        <button
+          type="button"
+          class="reaction"
+          data-reaction="💭 Made me think">
 
-  /* Check Supabase library */
+          💭 Made me think
+          <span>0</span>
 
-  if(!window.supabase){
+        </button>
 
-    status.textContent =
-      'Unable to load reader interaction service.';
 
-    return;
+        <button
+          type="button"
+          class="reaction"
+          data-reaction="🌹 Beautiful">
 
-  }
+          🌹 Beautiful
+          <span>0</span>
 
+        </button>
 
-  const db =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+      </div>
 
 
-  /* LOAD REACTIONS */
+      <!-- READER NOTE FORM -->
 
-  async function loadReactions(){
+      <h3>💌 Leave a Note</h3>
 
-    try{
+      <form id="noteForm">
 
-      const { data, error } =
-        await db
-        .from('reader_reactions')
-        .select('reaction');
+        <input
+          type="text"
+          id="readerName"
+          placeholder="Your name"
+          maxlength="100"
+          required>
 
-      if(error) throw error;
 
-      const counts = {};
+        <textarea
+          id="readerMessage"
+          placeholder="Write your thoughts about UPIRA..."
+          maxlength="1000"
+          required></textarea>
 
-      (data || []).forEach(function(row){
 
-        counts[row.reaction] =
-          (counts[row.reaction] || 0) + 1;
+        <button
+          type="submit"
+          class="submit-btn">
 
-      });
+          Send Note
 
+        </button>
 
-      buttons.forEach(function(button){
+      </form>
 
-        const count =
-          counts[button.dataset.reaction] || 0;
 
-        button.querySelector('span').textContent =
-          count;
+      <div
+        id="noteStatus"
+        class="small">
+      </div>
 
-      });
 
+      <!-- READER NOTES -->
 
-      status.textContent =
-        '✓ Live reactions are connected.';
+      <h3>💭 Reader Notes</h3>
 
-    }
+      <div id="readerNotes">
 
-    catch(error){
+        <div class="small">
+          Loading reader notes...
+        </div>
 
-      console.error(
-        'Reaction loading error:',
-        error
-      );
+      </div>
 
-      status.textContent =
-        'Reactions unavailable right now.';
+    </section>
 
-    }
 
-  }
+  </main>
 
 
-  /* SAVE REACTION */
+  <footer>
 
-  buttons.forEach(function(button){
+    © 2026 UPIRA. All rights reserved.
 
-    button.addEventListener(
-      'click',
-      async function(){
+  </footer>
 
-        button.disabled = true;
 
-        try{
 
-          const { error } =
-            await db
-            .from('reader_reactions')
-            .insert({
-              reaction:
-                button.dataset.reaction
-            });
+  <!-- SUPABASE -->
 
-          if(error) throw error;
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-          button.classList.add('active');
 
-          status.textContent =
-            '✓ Thank you! Your reaction was added.';
+  <script>
 
-          await loadReactions();
+    (function () {
 
-        }
 
-        catch(error){
+      /* =====================================
+         SUPABASE CONFIGURATION
+      ===================================== */
 
-          console.error(
-            'Reaction insert error:',
-            error
-          );
+      const SUPABASE_URL =
+        'https://jnktgzjrcyxbdgpdedge.supabase.co';
 
-          status.textContent =
-            'Could not save your reaction.';
 
-        }
+      const SUPABASE_PUBLISHABLE_KEY =
+        'sb_publishable_V3ms7HM9FgRVMSU5z1ef6g_yy-8zTaE';
 
-        finally{
 
-          button.disabled = false;
+      /* =====================================
+         HTML ELEMENTS
+      ===================================== */
 
-        }
+      const status =
+        document.getElementById('reactionStatus');
 
-      }
-    );
 
-  });
+      const buttons =
+        document.querySelectorAll('.reaction');
 
 
-  /* LOAD READER NOTES */
+      const notesBox =
+        document.getElementById('readerNotes');
 
-  async function loadNotes(){
 
-    notesBox.innerHTML =
-      '<div class="small">Loading reader notes...</div>';
+      const form =
+        document.getElementById('noteForm');
 
-    try{
 
-      const { data, error } =
-        await db
-        .from('reader_notes')
-        .select(
-          'name,message,created_at'
-        )
-        .order(
-          'created_at',
-          { ascending:false }
-        )
-        .limit(20);
+      const noteStatus =
+        document.getElementById('noteStatus');
 
-      if(error) throw error;
 
-      notesBox.innerHTML = '';
+      const nameInput =
+        document.getElementById('readerName');
 
 
-      if(!data || data.length === 0){
+      const messageInput =
+        document.getElementById('readerMessage');
 
-        notesBox.innerHTML =
-          '<div class="small">Be the first to leave a note.</div>';
+
+      /* =====================================
+         CHECK SUPABASE LIBRARY
+      ===================================== */
+
+      if (!window.supabase) {
+
+        status.textContent =
+          'Unable to load reader interaction service.';
 
         return;
 
       }
 
 
-      data.forEach(function(note){
+      /* =====================================
+         CREATE SUPABASE CLIENT
+      ===================================== */
 
-        const item =
-          document.createElement('div');
-
-        item.className =
-          'reader-note';
-
-
-        const name =
-          document.createElement('strong');
-
-        name.textContent =
-          note.name;
+      const db =
+        window.supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
 
 
-        const message =
-          document.createElement('div');
+      /* =====================================
+         LOAD REACTIONS
+      ===================================== */
 
-        message.textContent =
-          note.message;
+      async function loadReactions() {
 
+        try {
 
-        const date =
-          document.createElement('small');
-
-        date.textContent =
-          note.created_at
-          ? new Date(
-              note.created_at
-            ).toLocaleDateString()
-          : '';
+          const { data, error } =
+            await db
+            .from('reader_reactions')
+            .select('reaction');
 
 
-        item.appendChild(name);
-        item.appendChild(message);
-        item.appendChild(date);
+          if (error) {
 
-        notesBox.appendChild(item);
+            throw error;
+
+          }
+
+
+          const counts = {};
+
+
+          (data || []).forEach(function (row) {
+
+            counts[row.reaction] =
+              (counts[row.reaction] || 0) + 1;
+
+          });
+
+
+          buttons.forEach(function (button) {
+
+            const count =
+              counts[button.dataset.reaction] || 0;
+
+
+            const span =
+              button.querySelector('span');
+
+
+            if (span) {
+
+              span.textContent = count;
+
+            }
+
+          });
+
+
+          status.textContent =
+            '✓ Live reactions are connected.';
+
+
+        } catch (error) {
+
+
+          console.error(
+            'Reaction loading error:',
+            error
+          );
+
+
+          status.textContent =
+            'Reactions unavailable right now.';
+
+        }
+
+      }
+
+
+      /* =====================================
+         SAVE REACTION
+      ===================================== */
+
+      buttons.forEach(function (button) {
+
+
+        button.addEventListener(
+          'click',
+          async function () {
+
+
+            button.disabled = true;
+
+
+            status.textContent =
+              'Saving your reaction...';
+
+
+            try {
+
+
+              const { error } =
+                await db
+                .from('reader_reactions')
+                .insert({
+
+                  reaction:
+                    button.dataset.reaction
+
+                });
+
+
+              if (error) {
+
+                throw error;
+
+              }
+
+
+              button.classList.add('active');
+
+
+              status.textContent =
+                '✓ Thank you! Your reaction was added.';
+
+
+              await loadReactions();
+
+
+            } catch (error) {
+
+
+              console.error(
+                'Reaction insert error:',
+                error
+              );
+
+
+              status.textContent =
+                'Could not save your reaction. Please try again.';
+
+
+            } finally {
+
+
+              button.disabled = false;
+
+            }
+
+          }
+        );
 
       });
 
-    }
-
-    catch(error){
-
-      console.error(
-        'Reader notes error:',
-        error
-      );
-
-      notesBox.innerHTML =
-        '<div class="small">Reader notes are temporarily unavailable.</div>';
-
-    }
-
-  }
 
 
-  /* SAVE READER NOTE */
+      /* =====================================
+         LOAD READER NOTES
+      ===================================== */
 
-  form.addEventListener(
-    'submit',
-    async function(event){
-
-      event.preventDefault();
-
-      const name =
-        document
-        .getElementById('readerName')
-        .value
-        .trim()
-        .slice(0,40);
-
-      const message =
-        document
-        .getElementById('readerMessage')
-        .value
-        .trim()
-        .slice(0,300);
+      async function loadNotes() {
 
 
-      if(!message) return;
+        notesBox.innerHTML =
+          '<div class="small">Loading reader notes...</div>';
 
 
-      const submitButton =
-        form.querySelector('button');
-
-      submitButton.disabled = true;
+        try {
 
 
-      try{
+          const { data, error } =
+            await db
+            .from('reader_notes')
+            .select(
+              'name,message,created_at'
+            )
+            .order(
+              'created_at',
+              {
+                ascending: false
+              }
+            )
+            .limit(20);
 
-        const { error } =
-          await db
-          .from('reader_notes')
-          .insert({
-            name: name || 'Anonymous',
-            message: message
+
+          if (error) {
+
+            throw error;
+
+          }
+
+
+          notesBox.innerHTML = '';
+
+
+          if (!data || data.length === 0) {
+
+
+            notesBox.innerHTML =
+              '<div class="small">Be the first to leave a note.</div>';
+
+
+            return;
+
+          }
+
+
+          data.forEach(function (note) {
+
+
+            const div =
+              document.createElement('div');
+
+
+            div.className = 'note';
+
+
+            const name =
+              document.createElement('div');
+
+
+            name.className =
+              'note-name';
+
+
+            name.textContent =
+              note.name || 'Anonymous';
+
+
+            const message =
+              document.createElement('div');
+
+
+            message.textContent =
+              note.message || '';
+
+
+            const date =
+              document.createElement('div');
+
+
+            date.className =
+              'note-date';
+
+
+            if (note.created_at) {
+
+              const d =
+                new Date(note.created_at);
+
+
+              date.textContent =
+                d.toLocaleString();
+
+            }
+
+
+            div.appendChild(name);
+
+            div.appendChild(message);
+
+            div.appendChild(date);
+
+
+            notesBox.appendChild(div);
+
           });
 
-        if(error) throw error;
+
+        } catch (error) {
 
 
-        form.reset();
+          console.error(
+            'Reader notes error:',
+            error
+          );
 
-        await loadNotes();
 
-      }
+          notesBox.innerHTML =
+            '<div class="small">Unable to load reader notes.</div>';
 
-      catch(error){
-
-        console.error(
-          'Note insert error:',
-          error
-        );
-
-        alert(
-          'Could not post your note. Please try again.'
-        );
+        }
 
       }
 
-      finally{
-
-        submitButton.disabled = false;
-
-      }
-
-    }
-  );
 
 
-  /* START */
+      /* =====================================
+         SAVE READER NOTE
+      ===================================== */
 
-  loadReactions();
-  loadNotes();
+      form.addEventListener(
+        'submit',
+        async function (event) {
 
-})();
 
-</script>
+          event.preventDefault();
+
+
+          const name =
+            nameInput.value.trim();
+
+
+          const message =
+            messageInput.value.trim();
+
+
+          if (!name || !message) {
+
+            noteStatus.textContent =
+              'Please enter your name and message.';
+
+            return;
+
+          }
+
+
+          const submitButton =
+            form.querySelector(
+              'button[type="submit"]'
+            );
+
+
+          submitButton.disabled = true;
+
+
+          noteStatus.textContent =
+            'Sending your note...';
+
+
+          try {
+
+
+            const { error } =
+              await db
+              .from('reader_notes')
+              .insert({
+
+                name: name,
+
+                message: message
+
+              });
+
+
+            if (error) {
+
+              throw error;
+
+            }
+
+
+            noteStatus.textContent =
+              '✓ Your note has been added.';
+
+
+            form.reset();
+
+
+            await loadNotes();
+
+
+          } catch (error) {
+
+
+            console.error(
+              'Note insert error:',
+              error
+            );
+
+
+            noteStatus.textContent =
+              'Could not save your note. Please try again.';
+
+
+          } finally {
+
+
+            submitButton.disabled = false;
+
+          }
+
+        }
+      );
+
+
+
+      /* =====================================
+         START
+      ===================================== */
+
+      loadReactions();
+
+      loadNotes();
+
+
+    })();
+
+  </script>
+
 
 </body>
 </html>
